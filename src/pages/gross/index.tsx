@@ -1,6 +1,5 @@
-
 const GrossPage = () => {
-  return <div >Gross</div>;
+  return <div>Gross</div>;
 };
 
 export default GrossPage;

@@ -1,6 +1,5 @@
-
 const LoadboardPage = () => {
-  return <div >Loadboard</div>;
+  return <div>Loadboard</div>;
 };
 
 export default LoadboardPage;
