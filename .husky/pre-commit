@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Colors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+NC="\033[0m" # No color
+
+echo "${YELLOW}🔍 Running pre-commit checks...${NC}"
+
+echo "▶️  Checking code formatting..."
+pnpm run check-format || {
+    echo "${RED}❌ Prettier check failed.${NC}"
+    echo "   Run: ${YELLOW}pnpm format${NC} to fix formatting."
+    exit 1
+}
+
+echo "▶️  Running ESLint..."
+pnpm run check-lint || {
+    echo "${RED}❌ ESLint check failed.${NC}"
+    echo "   Run: ${YELLOW}pnpm lint --fix${NC} to auto-fix simple issues."
+    exit 1
+}
+
+echo "▶️  Checking TypeScript types..."
+pnpm run check-types || {
+    echo "${RED}❌ TypeScript type check failed.${NC}"
+    echo "   Inspect the errors above and fix the type issues."
+    exit 1
+}
+
+echo "▶️  Building project..."
+pnpm build || {
+    echo "${RED}❌ Build failed.${NC}"
+    echo "   Fix build errors before committing."
+    exit 1
+}
+
+echo "${GREEN}🎉 All checks passed! Commit looks great.${NC}"
